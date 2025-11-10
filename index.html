@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#004080" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <title>Viiajo</title>
+
+  <!-- Estilos principales -->
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" />
+ 
+
+  <!-- Ícono para navegadores y móviles -->
+  <link rel="icon" href="img/Viiajo_LogoConNombrePNGtoICO.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" href="img/Viiajo_LogoConNombrePNGtoICO.ico" />
+</head>
+<body>
+  <button id="toggle-menu" aria-label="Mostrar menú lateral">
+  <i class="bi bi-list"></i>
+  </button>
+
+
+  <div class="wrapper">
+    <aside>
+      <header>
+        <img src="img/Viiajo_LogoConNombre.png" alt="Logo de Viiajo" class="logo" />
+      </header>
+      <nav>
+        <ul id="menu-categorias" class="menu" role="navigation" aria-label="Categorías">
+          <li>
+          <a href="carrito.html" class="boton-categoria">🛒 VER CARRITO</a>
+          </li>
+        </ul>
+      </nav>
+
+      <footer>
+        <p>© 2025 Puzzle Solutions</p>
+        <p><a href="mailto:puzzlesolutions@gmail.com">ventas@puzzlesolutions.com</a></p>    
+      </footer>
+
+
+
+      <button id="cerrar-menu" aria-label="Ocultar menú lateral">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </aside>
+
+    <main>
+      <h2 id="titulo-principal">Todos los productos</h2>
+      <section id="subcategorias" class="subcategorias" aria-label="Subcategorías"></section>
+      <section id="contenedor-productos" class="contenedor-productos" aria-label="Listado de productos"></section>
+    </main>
+  </div>
+
+  <!-- Scripts en módulo -->
+  <script type="module" src="js/productos.js"></script>
+  <script type="module" src="js/main.js"></script>
+
+  <a href="carrito.html" id="carrito-float" title="Ver carrito">🛒</a>
+
+  <a href="https://wa.me/50241084481?text=Hola,%20estoy%20interesado%20en%20sus%20productos%20y%20me%20gustaría%20recibir%20más%20información." 
+    id="whatsapp-contacto" 
+    title="Contáctanos por WhatsApp" 
+    target="_blank">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/WhatsApp_icon.png/598px-WhatsApp_icon.png" alt="WhatsApp" />
+  </a>
+
+
+</body>
+</html>

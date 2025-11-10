@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carrito de compras</title>
+  <link rel="stylesheet" href="css/main.css" />
+  <style>
+    main {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    #carrito-contenido .producto {
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      text-align: center;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    #carrito-contenido .producto img {
+      max-width: 100%;
+      max-height: 150px;
+      object-fit: contain;
+      margin-bottom: 0.5rem;
+    }
+
+    #carrito-contenido .producto h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    #carrito-contenido .producto p {
+      font-size: 0.95rem;
+      margin-bottom: 0.25rem;
+    }
+
+    #whatsapp-contacto {
+      position: fixed;
+      bottom: 1rem;
+      left: 1rem;
+      width: 55px;
+      height: 55px;
+      background-color: #25D366;
+      border-radius: 50%;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    #whatsapp-contacto img {
+      width: 28px;
+      height: 28px;
+    }
+
+    #enviar-whatsapp {
+      display: inline-block;
+      margin-top: 1rem;
+      background-color: #25D366;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 0.25rem;
+      text-decoration: none;
+    }
+
+    #vaciar-carrito {
+      margin-top: 1rem;
+      background-color: #ccc;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 0.25rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h2>Tu carrito</h2>
+    <div id="carrito-contenido"></div>
+    <div id="carrito-total"></div>
+    <button id="vaciar-carrito">Vaciar carrito</button>
+    <a href="index.html" id="seguir-comprando">Seguir comprando</a>
+    <a href="#" id="enviar-whatsapp" target="_blank">Enviar por WhatsApp</a>
+
+
+
+
+  </main>
+
+  <!-- Botón flotante de WhatsApp -->
+  <a href="https://wa.me/50241084481?text=Hola,%20estoy%20interesado%20en%20sus%20productos%20y%20me%20gustaría%20recibir%20más%20información."
+     id="whatsapp-contacto"
+     title="Contáctanos por WhatsApp"
+     target="_blank">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/WhatsApp_icon.png" alt="WhatsApp" />
+  </a>
+
+  <script>
+    const contenedor = document.getElementById("carrito-contenido");
+    const total = document.getElementById("carrito-total");
+    const vaciarBtn = document.getElementById("vaciar-carrito");
+    const whatsappBtn = document.getElementById("enviar-whatsapp");
+
+    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+    function renderCarrito() {
+      contenedor.innerHTML = "";
+      let suma = 0;
+      let mensaje = "";
+
+      if (carrito.length === 0) {
+        contenedor.innerHTML = "<p>No hay productos en el carrito.</p>";
+        total.textContent = "";
+        whatsappBtn.style.display = "none";
+        return;
+      }
+
+      carrito.forEach((p, i) => {
+        suma += p.precio;
+        mensaje += `🛒 ${p.titulo} - Q${p.precio.toFixed(2)}\n`;
+
+        const div = document.createElement("div");
+        div.className = "producto";
+        div.innerHTML = `
+          <img src="${p.imagen}" alt="${p.titulo}" />
+          <h3>${p.titulo}</h3>
+          <p>${p.descripcion}</p>
+          <p>Q${p.precio.toFixed(2)}</p>
+          <button onclick="eliminar(${i})">Eliminar</button>
+        `;
+        contenedor.appendChild(div);
+      });
+
+      total.textContent = `Total: Q${suma.toFixed(2)}`;
+      const mensajeFinal = `Hola, quiero comprar los siguientes productos:\n\n${mensaje}\n🧾 Total: Q${suma.toFixed(2)}`;
+      const url = `https://wa.me/50241084481?text=${encodeURIComponent(mensajeFinal)}`;
+
+      whatsappBtn.href = url;
+      whatsappBtn.style.display = "inline-block";
+    }
+
+    function eliminar(index) {
+      carrito.splice(index, 1);
+      localStorage.setItem("carrito", JSON.stringify(carrito));
+      renderCarrito();
+    }
+
+    vaciarBtn.onclick = () => {
+      carrito = [];
+      localStorage.removeItem("carrito");
+      renderCarrito();
+    };
+
+    renderCarrito();
+  </script>
+</body>
+</html>
