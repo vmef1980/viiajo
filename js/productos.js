@@ -1,4 +1,4 @@
-export const productos = [
+export const productos =[
     {
         "id": "LUG-FANCY-20-CELESTE",
         "titulo": "MALETA FANCY CELESTE",
@@ -1498,5 +1498,305 @@ export const productos = [
         },
         "descripcion": "Color beige\nCon bolsillo oculto\nCon zipper\nUnisex\nMedidas:107x3cm",
         "precio": 49.0
+    },
+    {
+        "id": "SLEEP-MEMORY-NECK-GREY",
+        "titulo": "CUELLO MEMORY FOAM",
+        "imagen": "https://ekiipa.com/wp-content/uploads/2024/11/CUELLERA-GRIS-CON-MEMORY-FOAM-600x600.webp",
+        "categoria": {
+            "id": "DESCANSO",
+            "nombre": "DESCANSO"
+        },
+        "subcategoria": {
+            "id": "DESCANSO",
+            "nombre": "DESCANSO"
+        },
+        "descripcion": "Color: Gris con negro\nMaterial: Esponja de memoria",
+        "precio": 79.0
+    },
+    {
+        "id": "SLEEP-CUELLO-U-GREY",
+        "titulo": "CUELLO DE ESPONJA DE MEMORIA",
+        "imagen": "https://ekiipa.com/wp-content/uploads/2024/04/Diseno-sin-titulo-2024-05-07T202319.146-600x600.webp",
+        "categoria": {
+            "id": "DESCANSO",
+            "nombre": "DESCANSO"
+        },
+        "subcategoria": {
+            "id": "DESCANSO",
+            "nombre": "DESCANSO"
+        },
+        "descripcion": "Cuello tipo U\nEsponja de memoria",
+        "precio": 79.0
+    },
+    {
+        "id": "SLEEP-3D-EYE-MASK-BLK",
+        "titulo": "ANTIFAZ PARA DORMIR",
+        "imagen": "https://ekiipa.com/wp-content/uploads/2024/11/ANTIFAZ-3D-600x600.jpg",
+        "categoria": {
+            "id": "DESCANSO",
+            "nombre": "DESCANSO"
+        },
+        "subcategoria": {
+            "id": "DESCANSO",
+            "nombre": "DESCANSO"
+        },
+        "descripcion": "Antifaz de dormir\nColor: Negro\nMaterial: Esponja de memoria",
+        "precio": 49.0
+    },
+    {
+        "id": "SLEEP-FRAZADA-TERMIK",
+        "titulo": "FRAZADA TERMICA",
+        "imagen": "https://ekiipa.com/wp-content/uploads/2024/12/FRAZADA-TERMICA-600x600.png",
+        "categoria": {
+            "id": "DESCANSO",
+            "nombre": "DESCANSO"
+        },
+        "subcategoria": {
+            "id": "DESCANSO",
+            "nombre": "DESCANSO"
+        },
+        "descripcion": "Medidas:130x210cm\nMaterial: Aluminizado\nIdeal para camping",
+        "precio": 21.0
+    },
+    {
+        "id": "LUG-ACC-SPNDX-RED-26-28",
+        "titulo": "SPANDEX ROJO L 26-28",
+        "imagen": "https://ekiipa.com/wp-content/uploads/2024/11/SPANDEX-COBERTOR-DE-MALETA-M-1-600x600.jpg",
+        "categoria": {
+            "id": "ACCESORIOS DE MALETAS",
+            "nombre": "ACCESORIOS DE MALETAS"
+        },
+        "subcategoria": {
+            "id": "ACCESORIOS DE MALETAS",
+            "nombre": "ACCESORIOS DE MALETAS"
+        },
+        "descripcion": "Spandex\nColor: Rojo\nPara maleta grande de 26-28  pulgadas",
+        "precio": 89.0
+    },
+    {
+        "id": "LUG-ACC-SPNDX-RED-22-24",
+        "titulo": "SPANDEX ROJO M 22-24",
+        "imagen": "https://ekiipa.com/wp-content/uploads/2024/11/SPANDEX-COBERTOR-DE-MALETA-M-1-600x600.jpg",
+        "categoria": {
+            "id": "ACCESORIOS DE MALETAS",
+            "nombre": "ACCESORIOS DE MALETAS"
+        },
+        "subcategoria": {
+            "id": "ACCESORIOS DE MALETAS",
+            "nombre": "ACCESORIOS DE MALETAS"
+        },
+        "descripcion": "Spandex\nColor: Rojo\nPara maleta mediana de 22-24  pulgadas",
+        "precio": 79.0
+    },
+    {
+        "id": "LUG-ACC-SNPDX-GRN-22-24",
+        "titulo": "SPANDEX VERDE M 22-24",
+        "imagen": "https://ekiipa.com/wp-content/uploads/2024/11/SPANDEX-COBERTOR-DE-MALETA-M-600x600.jpg",
+        "categoria": {
+            "id": "ACCESORIOS DE MALETAS",
+            "nombre": "ACCESORIOS DE MALETAS"
+        },
+        "subcategoria": {
+            "id": "ACCESORIOS DE MALETAS",
+            "nombre": "ACCESORIOS DE MALETAS"
+        },
+        "descripcion": "Spandex\nColor: Verde\nPara maleta mediana de 22-24 pulgadas",
+        "precio": 79.0
+    },
+    {
+        "id": "LUG-ACC-SNPDX-GRN-26-28",
+        "titulo": "SPANDEX VERDE L 26-28",
+        "imagen": "https://ekiipa.com/wp-content/uploads/2024/11/SPANDEX-COBERTOR-DE-MALETA-M-600x600.jpg",
+        "categoria": {
+            "id": "ACCESORIOS DE MALETAS",
+            "nombre": "ACCESORIOS DE MALETAS"
+        },
+        "subcategoria": {
+            "id": "ACCESORIOS DE MALETAS",
+            "nombre": "ACCESORIOS DE MALETAS"
+        },
+        "descripcion": "Spandex\nColor: Verde\nPara maleta grande de 26-28  pulgadas",
+        "precio": 89.0
+    },
+    {
+        "id": "LUG-ACC-SPNDX-BLK-18-20",
+        "titulo": "SPANDEX NEGRO S 18-20",
+        "imagen": "https://ekiipa.com/wp-content/uploads/2024/04/30-cm-5-600x600.jpg",
+        "categoria": {
+            "id": "ACCESORIOS DE MALETAS",
+            "nombre": "ACCESORIOS DE MALETAS"
+        },
+        "subcategoria": {
+            "id": "ACCESORIOS DE MALETAS",
+            "nombre": "ACCESORIOS DE MALETAS"
+        },
+        "descripcion": "Spandex\nColor negro\nPara maleta carry on de 18-20 pulgadas",
+        "precio": 69.0
+    },
+    {
+        "id": "LUG-ACC-SPNDX-BLK-29-32",
+        "titulo": "SPANDEX NEGRO XL 29-32",
+        "imagen": "https://ekiipa.com/wp-content/uploads/2024/04/30-cm-5-600x600.jpg",
+        "categoria": {
+            "id": "ACCESORIOS DE MALETAS",
+            "nombre": "ACCESORIOS DE MALETAS"
+        },
+        "subcategoria": {
+            "id": "ACCESORIOS DE MALETAS",
+            "nombre": "ACCESORIOS DE MALETAS"
+        },
+        "descripcion": "Spandex\nColor negro\nPara maleta extra grande de 29-32 pulgadas",
+        "precio": 99.0
+    },
+    {
+        "id": "LUG-ACC-SPNDX-BLU-18-20",
+        "titulo": "SPANDEX AZUL S 18-20",
+        "imagen": "https://ekiipa.com/wp-content/uploads/2024/04/spandex-blue.avif",
+        "categoria": {
+            "id": "ACCESORIOS DE MALETAS",
+            "nombre": "ACCESORIOS DE MALETAS"
+        },
+        "subcategoria": {
+            "id": "ACCESORIOS DE MALETAS",
+            "nombre": "ACCESORIOS DE MALETAS"
+        },
+        "descripcion": "Spandex\nColor azul\nPara maleta carry on 18-20 pulgadas",
+        "precio": 69.0
+    },
+    {
+        "id": "LUG-ACC-SPNDX-BLU-22-24",
+        "titulo": "SPANDEX AZUL M 22-24",
+        "imagen": "https://ekiipa.com/wp-content/uploads/2024/04/spandex-blue.avif",
+        "categoria": {
+            "id": "ACCESORIOS DE MALETAS",
+            "nombre": "ACCESORIOS DE MALETAS"
+        },
+        "subcategoria": {
+            "id": "ACCESORIOS DE MALETAS",
+            "nombre": "ACCESORIOS DE MALETAS"
+        },
+        "descripcion": "Spandex\nColor azul\nPara maleta mediana de 22-24 pulgadas",
+        "precio": 79.0
+    },
+    {
+        "id": "LUG-ACC-SPNDX-BLK-22-24",
+        "titulo": "SPANDEX NEGRO M 22-24 (AGOTADO)",
+        "imagen": "https://ekiipa.com/wp-content/uploads/2024/04/30-cm-5-600x600.jpg",
+        "categoria": {
+            "id": "ACCESORIOS DE MALETAS",
+            "nombre": "ACCESORIOS DE MALETAS"
+        },
+        "subcategoria": {
+            "id": "ACCESORIOS DE MALETAS",
+            "nombre": "ACCESORIOS DE MALETAS"
+        },
+        "descripcion": "Spandex\nColor negro\nPara maleta mediana de 22-24 pulgadas",
+        "precio": 79.0
+    },
+    {
+        "id": "LUG-ACC-SPNDX-BLK-26-28",
+        "titulo": "SPANDEX NEGRO L 26-28 (AGOTADO)",
+        "imagen": "https://ekiipa.com/wp-content/uploads/2024/04/30-cm-5-600x600.jpg",
+        "categoria": {
+            "id": "ACCESORIOS DE MALETAS",
+            "nombre": "ACCESORIOS DE MALETAS"
+        },
+        "subcategoria": {
+            "id": "ACCESORIOS DE MALETAS",
+            "nombre": "ACCESORIOS DE MALETAS"
+        },
+        "descripcion": "Spandex\nColor negro\nPara maleta grande de 26-28  pulgadas",
+        "precio": 89.0
+    },
+    {
+        "id": "LUG-ACC-SPNDX-BLU-29-32",
+        "titulo": "SPANDEX AZUL XL 29-32",
+        "imagen": "https://ekiipa.com/wp-content/uploads/2024/04/spandex-blue.avif",
+        "categoria": {
+            "id": "ACCESORIOS DE MALETAS",
+            "nombre": "ACCESORIOS DE MALETAS"
+        },
+        "subcategoria": {
+            "id": "ACCESORIOS DE MALETAS",
+            "nombre": "ACCESORIOS DE MALETAS"
+        },
+        "descripcion": "Spandex\nColor azul\nPara maleta extra grande de 29-32 pulgadas",
+        "precio": 99.0
+    },
+    {
+        "id": "LUG-ACC-SPNDX-BLU-26-28",
+        "titulo": "SPANDEX AZUL L 26-28 (AGOTADO)",
+        "imagen": "https://ekiipa.com/wp-content/uploads/2024/04/spandex-blue.avif",
+        "categoria": {
+            "id": "ACCESORIOS DE MALETAS",
+            "nombre": "ACCESORIOS DE MALETAS"
+        },
+        "subcategoria": {
+            "id": "ACCESORIOS DE MALETAS",
+            "nombre": "ACCESORIOS DE MALETAS"
+        },
+        "descripcion": "Spandex\nColor azul\nPara maleta grande de 26-28  pulgadas",
+        "precio": 89.0
+    },
+    {
+        "id": "LUG-ACC-WHEEL-BLACK",
+        "titulo": "FUNDAS DE SILICONA PARA RUEDAS DE MALETA BLACK",
+        "imagen": "https://ekiipa.com/wp-content/uploads/2025/06/PROTECTOR-DE-RUEDAS-BLACK-600x600.jpg",
+        "categoria": {
+            "id": "ACCESORIOS DE MALETAS",
+            "nombre": "ACCESORIOS DE MALETAS"
+        },
+        "subcategoria": {
+            "id": "ACCESORIOS DE MALETAS",
+            "nombre": "ACCESORIOS DE MALETAS"
+        },
+        "descripcion": "Color: Negro\nCantidad: 8 piezas\nMaterial: Silicón",
+        "precio": 29.0
+    },
+    {
+        "id": "LUG-ACC-WHEEL-BLUE",
+        "titulo": "FUNDAS DE SILICONA PARA RUEDAS DE MALETA BLUE CELESTE",
+        "imagen": "https://ekiipa.com/wp-content/uploads/2025/06/PROTECTOR-DE-RUEDAS-LIGHT-BLUE-600x600.jpg",
+        "categoria": {
+            "id": "ACCESORIOS DE MALETAS",
+            "nombre": "ACCESORIOS DE MALETAS"
+        },
+        "subcategoria": {
+            "id": "ACCESORIOS DE MALETAS",
+            "nombre": "ACCESORIOS DE MALETAS"
+        },
+        "descripcion": "Color: Celeste\nCantidad: 8 piezas\nMaterial: Silicón",
+        "precio": 29.0
+    },
+    {
+        "id": "LUG-ACC-WHEEL-MORADO",
+        "titulo": "FUNDAS DE SILICONA PARA RUEDAS DE MALETA MORADO",
+        "imagen": "https://ekiipa.com/wp-content/uploads/2025/06/PROTECTOR-DE-RUEDAS-PURPLE-600x600.jpg",
+        "categoria": {
+            "id": "ACCESORIOS DE MALETAS",
+            "nombre": "ACCESORIOS DE MALETAS"
+        },
+        "subcategoria": {
+            "id": "ACCESORIOS DE MALETAS",
+            "nombre": "ACCESORIOS DE MALETAS"
+        },
+        "descripcion": "Color: Morado\nCantidad: 8 piezas\nMaterial: Silicón",
+        "precio": 29.0
+    },
+    {
+        "id": "LUG-ACC-WHEEL-RED",
+        "titulo": "FUNDAS DE SILICONA PARA RUEDAS DE MALETA ROJO",
+        "imagen": "https://ekiipa.com/wp-content/uploads/2025/06/PROTECTOR-DE-RUEDAS-RED-600x600.jpg",
+        "categoria": {
+            "id": "ACCESORIOS DE MALETAS",
+            "nombre": "ACCESORIOS DE MALETAS"
+        },
+        "subcategoria": {
+            "id": "ACCESORIOS DE MALETAS",
+            "nombre": "ACCESORIOS DE MALETAS"
+        },
+        "descripcion": "Color: Rojo\nCantidad: 8 piezas\nMaterial: Silicón",
+        "precio": 29.0
     }
 ]
