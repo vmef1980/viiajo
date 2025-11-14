@@ -1,4 +1,4 @@
-export const productos =[
+export const productos = [
     {
         "id": "LUG-FANCY-20-CELESTE",
         "titulo": "MALETA FANCY CELESTE",

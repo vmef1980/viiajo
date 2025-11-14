@@ -116,7 +116,7 @@ main {
   background-color: #d0e0ff;
   border: none;
   border-radius: 0.25rem;
-  font-size: 0.95rem;
+  font-size: 0.75rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
@@ -275,6 +275,36 @@ main {
   height: 28px;
 }
 
+
+#boton-volver {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 5rem;
+  background-color: #25D366;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  z-index: 1000;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#boton-volver:hover {
+  background-color: var(--color-secundario);
+  transform: scale(1.05);
+}
+
+#boton-volver span {
+  display: inline-block;
+}
+
+
 #seguir-comprando {
   display: inline-block;
   margin-top: 1rem;
@@ -292,8 +322,6 @@ main {
   gap: 2rem;
   margin-top: 1.5rem;
 }
-
-
 
 #seguir-comprando {
   background-color: #004080;
@@ -329,4 +357,18 @@ footer a {
 footer a:hover {
   text-decoration: underline;
   color: #388E3C; /* tono más oscuro al pasar el mouse */
+}
+
+
+#contador-carrito {
+  background-color: var(--color-acento);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 1rem;
+  margin-left: 4px;
+  display: inline-block;
+  min-width: 20px;
+  text-align: center;
 }

@@ -1,4 +1,4 @@
-import { productos } from "./productos.js";
+import { productos } from "../js/productos.js";
 
 const menu = document.querySelector("#menu-categorias");
 const subcategorias = document.querySelector("#subcategorias");
@@ -126,6 +126,31 @@ document.addEventListener("click", e => {
     }
   }
 });
+
+// Simulación: cantidad de productos en el carrito
+let cantidadCarrito = 0;
+
+// Función para actualizar el contador visual
+function actualizarContadorCarrito() {
+  const contador = document.getElementById('contador-carrito');
+  contador.textContent = cantidadCarrito;
+}
+
+// Ejemplo: cuando se agrega un producto
+function agregarAlCarrito(productoId) {
+  cantidadCarrito++;
+  actualizarContadorCarrito();
+  // Aquí puedes guardar en localStorage o actualizar tu lógica real
+}
+
+// Inicializar contador al cargar la página
+document.addEventListener('DOMContentLoaded', () => {
+  // Si usas localStorage:
+  // cantidadCarrito = parseInt(localStorage.getItem('carritoCantidad')) || 0;
+  actualizarContadorCarrito();
+});
+
+
 
 // Carga inicial
 cargarProductos(productos);

@@ -4,45 +4,491 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#004080" />
+  <meta name="theme-color" content="#F47C20" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <title>Viiajo</title>
+  <title>VIIAJO - Artículos para tus viajes</title>
 
-  <!-- Estilos principales -->
-  <link rel="stylesheet" href="css/main.css" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" />
- 
-
-  <!-- Ícono para navegadores y móviles -->
+  
+  <!-- Íconos -->
   <link rel="icon" href="img/Viiajo_LogoConNombrePNGtoICO.ico" type="image/x-icon" />
   <link rel="apple-touch-icon" href="img/Viiajo_LogoConNombrePNGtoICO.ico" />
+
+  <style>
+    :root {
+      /* Paleta Puzzle Solutions */
+      --primary: #F47C20;
+      --primary-dark: #00A86F;
+      --accent: #0074B7;
+      --highlight: #FFD447;
+      --text-dark: #1C3F60;
+      --text-soft: #4CAF5C;
+
+      --bg: #f8f9fb;
+      --card-bg: rgba(255, 255, 255, 0.95);
+      --text: #2d2d2d;
+      --text-light: #666;
+      --border: rgba(0,0,0,0.08);
+      --shadow: 0 8px 32px rgba(0,0,0,0.08);
+      --radius: 16px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #fff8f0 0%, #e6f7ff 100%);
+      color: var(--text-dark);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ===== HEADER & MENU TOGGLE ===== */
+    #toggle-menu {
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      z-index: 1001;
+      background: white;
+      border: none;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      color: var(--accent);
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    #toggle-menu:hover {
+      transform: scale(1.1);
+      box-shadow: 0 12px 40px rgba(0, 116, 183, 0.3);
+    }
+
+    /* ===== ASIDE (MENÚ LATERAL) ===== */
+    .wrapper {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    aside {
+      position: fixed;
+      top: 0;
+      left: -300px;
+      width: 300px;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-right: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      transition: left 0.4s ease;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+    }
+
+    aside.abierto {
+      left: 0;
+    }
+
+    aside header {
+      padding: 2rem 1.5rem 1rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    aside .logo {
+      width: 180px;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.1));
+      transition: transform 0.3s ease;
+    }
+
+    aside .logo:hover {
+      transform: scale(1.05);
+    }
+
+    aside nav {
+      flex: 1;
+      padding: 1.5rem 1rem;
+    }
+
+    #menu-categorias {
+      list-style: none;
+    }
+
+    .boton-categoria {
+      display: block;
+      width: 100%;
+      padding: 0.9rem 1.2rem;
+      margin-bottom: 0.5rem;
+      background: var(--card-bg);
+      border: none;
+      border-radius: var(--radius);
+      font-weight: 600;
+      color: var(--text-dark);
+      text-align: left;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      font-size: 0.95rem;
+    }
+
+    .boton-categoria:hover {
+      background: var(--primary);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(244, 124, 32, 0.3);
+    }
+
+    aside footer {
+      padding: 1.5rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-soft);
+      border-top: 1px solid var(--border);
+    }
+
+    aside footer a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    #cerrar-menu {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: transparent;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--text-light);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    #cerrar-menu:hover {
+      color: var(--text-dark);
+      transform: rotate(90deg);
+    }
+
+    /* ===== MAIN CONTENT ===== */
+    main {
+      flex: 1;
+      padding: 2rem 1rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    #titulo-principal {
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--accent), var(--primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ===== SUBCATEGORÍAS (CHIPS) ===== */
+    #subcategorias {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      justify-content: center;
+      margin-bottom: 2rem;
+      padding: 0 1rem;
+    }
+
+    .boton-subcategoria {
+      background: white;
+      border: 1.5px solid var(--border);
+      color: var(--text-dark);
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .boton-subcategoria:hover,
+    .boton-subcategoria.activo {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(244, 124, 32, 0.3);
+    }
+
+    /* ===== PRODUCTOS ===== */
+    #contenedor-productos {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.5rem;
+      padding: 0 1rem;
+    }
+
+    .producto {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .producto:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+    }
+
+    /* IMAGEN MEJORADA */
+    .producto .imagen-contenedor {
+      position: relative;
+      width: 100%;
+      height: 200px;
+      background: white;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .producto img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      transition: transform 0.4s ease;
+      padding: 12px;
+    }
+
+    .producto:hover img {
+      transform: scale(1.08);
+    }
+
+    .producto .contenido {
+      padding: 1rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .producto h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+      color: var(--text-dark);
+      line-height: 1.3;
+    }
+
+    .producto .descripcion {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      margin-bottom: 0.6rem;
+      flex: 1;
+      display: -webkit-box;
+
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .producto .precio {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.8rem;
+    }
+
+    .producto button {
+      width: 100%;
+      padding: 0.75rem;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 4px 12px rgba(244, 124, 32, 0.3);
+    }
+
+    .producto button:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 168, 111, 0.4);
+    }
+
+    .sin-resultados {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 3rem;
+      color: var(--text-light);
+      font-size: 1.1rem;
+    }
+
+    /* ===== BOTONES FLOTANTES ===== */
+    #carrito-float, #whatsapp-contacto {
+      position: fixed;
+      z-index: 999;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: white;
+      text-decoration: none;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      transition: var(--transition);
+    }
+
+    #carrito-float {
+      bottom: 90px;
+      right: 1rem;
+      background: var(--highlight);
+    }
+
+    #carrito-float:hover {
+      transform: scale(1.1);
+      background: #f5c02e;
+    }
+
+    #carrito-float span {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: #e6a800;
+      color: white;
+      font-size: 0.8rem;
+      font-weight: bold;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid white;
+      animation: pulse 2s infinite;
+    }
+
+    #whatsapp-contacto {
+      bottom: 160px;
+      right: 1rem;
+      background: var(--primary-dark);
+    }
+
+    #whatsapp-contacto:hover {
+      transform: scale(1.1);
+      background: #008c5a;
+    }
+
+    #whatsapp-contacto img {
+      width: 32px;
+      height: 32px;
+      filter: brightness(0) invert(1);
+    }
+
+    #boton-volver {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255,255,255,0.9);
+      color: var(--text-dark);
+      padding: 0.7rem 1.2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      transition: var(--transition);
+      border: 1px solid var(--border);
+    }
+
+    #boton-volver:hover {
+      background: white;
+      transform: translateX(-50%) translateY(-2px);
+      border-color: var(--primary);
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      aside {
+        width: 280px;
+        left: -280px;
+      }
+
+      main {
+        padding: 1.5rem 0.5rem;
+      }
+
+      #contenedor-productos {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 1rem;
+      }
+
+      #titulo-principal {
+        font-size: 1.6rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      #toggle-menu {
+        width: 44px;
+        height: 44px;
+        font-size: 1.3rem;
+      }
+
+      #contenedor-productos {
+        grid-template-columns: 1fr;
+      }
+
+      .boton-subcategoria {
+        font-size: 0.85rem;
+        padding: 0.4rem 0.8rem;
+      }
+    }
+  </style>
 </head>
 <body>
-  <button id="toggle-menu" aria-label="Mostrar menú lateral">
-  <i class="bi bi-list"></i>
-  </button>
 
+  <button id="toggle-menu" aria-label="Mostrar menú lateral">
+    <i class="bi bi-list"></i>
+  </button>
 
   <div class="wrapper">
     <aside>
       <header>
-        <img src="img/Viiajo_LogoConNombre.png" alt="Logo de Viiajo" class="logo" />
+        <img src="img/Viiajo_LogoConNombre.png" alt="Logo de GuateCocina" class="logo" />
       </header>
       <nav>
-        <ul id="menu-categorias" class="menu" role="navigation" aria-label="Categorías">
-          <li>
-          <a href="carrito.html" class="boton-categoria">🛒 VER CARRITO</a>
-          </li>
-        </ul>
+        <ul id="menu-categorias" class="menu" role="navigation" aria-label="Categorías"></ul>
       </nav>
-
       <footer>
         <p>© 2025 Puzzle Solutions</p>
-        <p><a href="mailto:puzzlesolutions@gmail.com">ventas@puzzlesolutions.com</a></p>    
+        <p><a href="mailto:ventas@puzzlesolutions.com">ventas@puzzlesolutions.com</a></p>    
       </footer>
-
-
-
       <button id="cerrar-menu" aria-label="Ocultar menú lateral">
         <i class="bi bi-x-lg"></i>
       </button>
@@ -55,19 +501,141 @@
     </main>
   </div>
 
-  <!-- Scripts en módulo -->
-  <script type="module" src="js/productos.js"></script>
-  <script type="module" src="js/main.js"></script>
-
-  <a href="carrito.html" id="carrito-float" title="Ver carrito">🛒</a>
-
-  <a href="https://wa.me/50241084481?text=Hola,%20estoy%20interesado%20en%20sus%20productos%20y%20me%20gustaría%20recibir%20más%20información." 
-    id="whatsapp-contacto" 
-    title="Contáctanos por WhatsApp" 
-    target="_blank">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/WhatsApp_icon.png/598px-WhatsApp_icon.png" alt="WhatsApp" />
+  <!-- Botones flotantes -->
+  <a href="carrito.html" id="carrito-float" title="Ver carrito">
+    <i class="bi bi-cart3"></i>
+    <span id="contador-carrito">0</span>
   </a>
 
+  <a href="https://wa.me/50241084481?text=Hola,%20estoy%20interesado%20en%20sus%20productos%20y%20me%20gustaría%20recibir%20más%20información." 
+     id="whatsapp-contacto" 
+     title="Contáctanos por WhatsApp" 
+     target="_blank">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/WhatsApp_icon.png" alt="WhatsApp" />
+  </a>
 
+  <a href="/" id="boton-volver" title="Volver a la página inicial">
+    Volver
+  </a>
+
+  <!-- Scripts -->
+  <script type="module">
+    import { productos } from "./js/productos.js";
+
+    const menu = document.querySelector("#menu-categorias");
+    const subcategorias = document.querySelector("#subcategorias");
+    const contenedor = document.querySelector("#contenedor-productos");
+    const titulo = document.querySelector("#titulo-principal");
+    const toggleMenu = document.getElementById("toggle-menu");
+    const cerrarMenu = document.getElementById("cerrar-menu");
+    const aside = document.querySelector("aside");
+    const contadorCarrito = document.getElementById("contador-carrito");
+
+    // Restaurar menú
+    if (localStorage.getItem("menuAbierto") === "true") {
+      aside.classList.add("abierto");
+    }
+
+    toggleMenu.addEventListener("click", () => {
+      aside.classList.add("abierto");
+      localStorage.setItem("menuAbierto", "true");
+    });
+
+    cerrarMenu.addEventListener("click", () => {
+      aside.classList.remove("abierto");
+      localStorage.setItem("menuAbierto", "false");
+    });
+
+    // CATEGORÍAS
+    const categorias = [...new Set(productos.map(p => p.categoria.id))];
+
+    categorias.forEach(cat => {
+      const btn = document.createElement("button");
+      btn.className = "boton-categoria";
+      btn.textContent = cat.replace(/_/g, " ");
+      btn.setAttribute("aria-label", `Filtrar por ${btn.textContent}`);
+      btn.onclick = () => mostrarCategoria(cat);
+      menu.appendChild(btn);
+    });
+
+    function mostrarCategoria(catId) {
+      const nombre = catId.replace(/_/g, " ");
+      titulo.textContent = nombre;
+      const filtrados = productos.filter(p => p.categoria.id === catId);
+      cargarProductos(filtrados);
+      mostrarSubcategorias(catId);
+      window.scrollTo({ top: titulo.offsetTop - 100, behavior: "smooth" });
+      aside.classList.remove("abierto");
+      localStorage.setItem("menuAbierto", "false");
+    }
+
+    function mostrarSubcategorias(catId) {
+      const subs = [...new Set(productos
+        .filter(p => p.categoria.id === catId && p.subcategoria)
+        .map(p => p.subcategoria.id))];
+
+      subcategorias.innerHTML = "";
+      subs.forEach(subId => {
+        const btn = document.createElement("button");
+        btn.className = "boton-subcategoria";
+        btn.textContent = subId.replace(/_/g, " ");
+        btn.onclick = () => {
+          const filtrados = productos.filter(p =>
+            p.categoria.id === catId && p.subcategoria?.id === subId
+          );
+          titulo.textContent = btn.textContent;
+          cargarProductos(filtrados);
+          document.querySelectorAll('.boton-subcategoria').forEach(b => b.classList.remove('activo'));
+          btn.classList.add('activo');
+        };
+        subcategorias.appendChild(btn);
+      });
+    }
+
+    function cargarProductos(lista) {
+      contenedor.innerHTML = "";
+      if (!lista.length) {
+        contenedor.innerHTML = `<div class="sin-resultados"><p>No hay productos disponibles.</p></div>`;
+        return;
+      }
+
+      lista.forEach(p => {
+        const div = document.createElement("div");
+        div.className = "producto";
+        div.innerHTML = `
+          <div class="imagen-contenedor">
+            <img src="${p.imagen || 'img/placeholder.png'}" alt="${p.titulo}" />
+          </div>
+          <div class="contenido">
+            <h3>${p.titulo}</h3>
+            <p class="descripcion">${p.descripcion}</p>
+            <p class="precio">Q${p.precio.toFixed(2)}</p>
+            <button class="agregar-carrito" data-id="${p.id}">Agregar</button>
+          </div>
+        `;
+        contenedor.appendChild(div);
+      });
+    }
+
+    // CARRITO
+    document.addEventListener("click", e => {
+      if (e.target.classList.contains("agregar-carrito")) {
+        const id = e.target.dataset.id;
+        const producto = productos.find(p => p.id === id);
+        if (producto) {
+          const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+          carrito.push(producto);
+          localStorage.setItem("carrito", JSON.stringify(carrito));
+          contadorCarrito.textContent = carrito.length;
+          contadorCarrito.style.animation = "pulse 0.6s ease";
+          setTimeout(() => contadorCarrito.style.animation = "", 600);
+        }
+      }
+    });
+
+    // Carga inicial
+    cargarProductos(productos);
+    contadorCarrito.textContent = (JSON.parse(localStorage.getItem("carrito")) || []).length;
+  </script>
 </body>
 </html>

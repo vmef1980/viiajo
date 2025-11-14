@@ -2,162 +2,501 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Carrito de compras</title>
-  <link rel="stylesheet" href="css/main.css" />
+  <meta name="theme-color" content="#F47C20" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <title>Carrito - GuateCocina</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" />
+
+  <!-- Íconos -->
+  <link rel="icon" href="img/Viiajo_LogoConNombrePNGtoICO.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" href="img/Viiajo_LogoConNombrePNGtoICO.ico" />
+
   <style>
-    main {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 2rem;
+    :root {
+      /* Paleta Puzzle Solutions */
+      --primary: #F47C20;
+      --primary-dark: #00A86F;
+      --accent: #0074B7;
+      --highlight: #FFD447;
+      --text-dark: #1C3F60;
+      --text-soft: #4CAF5C;
+
+      --bg: #f8f9fb;
+      --card-bg: rgba(255, 255, 255, 0.95);
+      --text: #2d2d2d;
+      --text-light: #666;
+      --border: rgba(0,0,0,0.08);
+      --shadow: 0 8px 32px rgba(0,0,0,0.08);
+      --radius: 16px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    #carrito-contenido .producto {
-      background-color: white;
-      border: 1px solid #ddd;
-      border-radius: 0.5rem;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #fff8f0 0%, #e6f7ff 100%);
+      color: var(--text-dark);
+      line-height: 1.6;
+      min-height: 100vh;
       padding: 1rem;
+    }
+
+    .wrapper {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+
+    header {
       text-align: center;
-      margin-bottom: 1rem;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      margin-bottom: 2rem;
     }
 
-    #carrito-contenido .producto img {
-      max-width: 100%;
-      max-height: 150px;
-      object-fit: contain;
-      margin-bottom: 0.5rem;
+    header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent), var(--primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    #carrito-contenido .producto h3 {
-      font-size: 1.1rem;
-      margin-bottom: 0.25rem;
-    }
-
-    #carrito-contenido .producto p {
+    header p {
+      color: var(--text-light);
       font-size: 0.95rem;
-      margin-bottom: 0.25rem;
+      margin-top: 0.5rem;
     }
 
-    #whatsapp-contacto {
-      position: fixed;
-      bottom: 1rem;
-      left: 1rem;
-      width: 55px;
-      height: 55px;
-      background-color: #25D366;
-      border-radius: 50%;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
+    #carrito-vacio {
+      text-align: center;
+      padding: 4rem 1rem;
+      color: var(--text-light);
     }
 
-    #whatsapp-contacto img {
-      width: 28px;
-      height: 28px;
+    #carrito-vacio i {
+      font-size: 4rem;
+      color: var(--text-soft);
+      margin-bottom: 1rem;
     }
 
-    #enviar-whatsapp {
+    #carrito-vacio a {
       display: inline-block;
-      margin-top: 1rem;
-      background-color: #25D366;
+      margin-top: 1.5rem;
+      padding: 0.75rem 1.5rem;
+      background: var(--primary);
       color: white;
-      padding: 0.5rem 1rem;
-      border-radius: 0.25rem;
       text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(244, 124, 32, 0.3);
+      transition: var(--transition);
     }
 
-    #vaciar-carrito {
-      margin-top: 1rem;
-      background-color: #ccc;
+    #carrito-vacio a:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 168, 111, 0.4);
+    }
+
+    #lista-carrito {
+      display: grid;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .item-carrito {
+      display: flex;
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      transition: var(--transition);
+    }
+
+    .item-carrito:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.1);
+    }
+
+    .item-carrito img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+    }
+
+    .info-item {
+      flex: 1;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .info-item h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 0.4rem;
+    }
+
+    .info-item .descripcion {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      margin-bottom: 0.6rem;
+      display: -webkit-box;
+
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .precio-cantidad {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .precio-cantidad .precio {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .boton-eliminar {
+      background: #ff4444;
+      color: white;
       border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 0.25rem;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      font-size: 1rem;
       cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .boton-eliminar:hover {
+      background: #cc0000;
+      transform: scale(1.1);
+    }
+
+    .resumen {
+      background: var(--card-bg);
+      padding: 1.5rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      margin-bottom: 2rem;
+    }
+
+    .resumen h3 {
+      font-size: 1.3rem;
+      color: var(--text-dark);
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .fila-resumen {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+      font-size: 1rem;
+    }
+
+    .total {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--primary);
+      border-top: 2px solid var(--border);
+      padding-top: 0.75rem;
+      margin-top: 0.75rem;
+    }
+
+    .botones-accion {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 0.9rem 1.8rem;
+      border: none;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: var(--transition);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .btn-primario {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primario:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 168, 111, 0.4);
+    }
+
+    .btn-secundario {
+      background: white;
+      color: var(--text-dark);
+      border: 1.5px solid var(--border);
+    }
+
+    .btn-secundario:hover {
+      background: #f0f0f0;
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    /* Botones flotantes */
+    #whatsapp-pedido, #boton-volver {
+      position: fixed;
+      z-index: 999;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: white;
+      text-decoration: none;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      transition: var(--transition);
+    }
+
+    #whatsapp-pedido {
+      bottom: 90px;
+      right: 1rem;
+      background: var(--primary-dark);
+    }
+
+    #whatsapp-pedido:hover {
+      transform: scale(1.1);
+      background: #008c5a;
+    }
+
+    #boton-volver {
+      bottom: 160px;
+      right: 1rem;
+      background: var(--highlight);
+    }
+
+    #boton-volver:hover {
+      transform: scale(1.1);
+      background: #f5c02e;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .item-carrito {
+        flex-direction: column;
+      }
+
+      .item-carrito img {
+        width: 100%;
+        height: 160px;
+      }
+
+      .info-item {
+        padding: 1rem;
+      }
+
+      .botones-accion {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header h1 {
+        font-size: 1.6rem;
+      }
+
+      #whatsapp-pedido, #boton-volver {
+        width: 56px;
+        height: 56px;
+        font-size: 1.4rem;
+      }
     }
   </style>
 </head>
 <body>
-  <main>
-    <h2>Tu carrito</h2>
-    <div id="carrito-contenido"></div>
-    <div id="carrito-total"></div>
-    <button id="vaciar-carrito">Vaciar carrito</button>
-    <a href="index.html" id="seguir-comprando">Seguir comprando</a>
-    <a href="#" id="enviar-whatsapp" target="_blank">Enviar por WhatsApp</a>
 
+  <div class="wrapper">
+    <header>
+      <h1>Tu Carrito</h1>
+      <p>Revisa y confirma tu pedido</p>
+    </header>
 
+    <section id="carrito-vacio" class="carrito-vacio">
+      <i class="bi bi-cart-x"></i>
+      <h2>Tu carrito está vacío</h2>
+      <p>Explora nuestros deliciosos platillos y agrega lo que más te guste.</p>
+      <a href="index.html">Volver a la tienda</a>
+    </section>
 
+    <section id="lista-carrito" class="lista-carrito"></section>
 
-  </main>
+    <section id="resumen-carrito" class="resumen" style="display: none;">
+      <h3>Resumen del Pedido</h3>
+      <div class="fila-resumen">
+        <span>Subtotal</span>
+        <span id="subtotal">Q0.00</span>
+      </div>
+      <div class="fila-resumen">
+        <span>Envío</span>
+        <span id="envio">Q25.00</span>
+      </div>
+      <div class="fila-resumen total">
+        <span>Total</span>
+        <span id="total">Q25.00</span>
+      </div>
 
-  <!-- Botón flotante de WhatsApp -->
-  <a href="https://wa.me/50241084481?text=Hola,%20estoy%20interesado%20en%20sus%20productos%20y%20me%20gustaría%20recibir%20más%20información."
-     id="whatsapp-contacto"
-     title="Contáctanos por WhatsApp"
-     target="_blank">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/WhatsApp_icon.png" alt="WhatsApp" />
+      <div class="botones-accion">
+        <a href="#" id="btn-whatsapp" class="btn btn-primario">
+          <i class="bi bi-whatsapp"></i> Enviar Pedido
+        </a>
+        <a href="index.html" class="btn btn-secundario">
+          <i class="bi bi-arrow-left"></i> Seguir Comprando
+        </a>
+      </div>
+    </section>
+  </div>
+
+  <!-- Botones flotantes -->
+  <a href="#" id="whatsapp-pedido" title="Enviar pedido por WhatsApp" style="display: none;">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/WhatsApp_icon.png" alt="WhatsApp" style="width: 32px; filter: brightness(0) invert(1);" />
+  </a>
+
+  <a href="index.html" id="boton-volver" title="Volver a la tienda">
+    <i class="bi bi-arrow-left-circle-fill"></i>
   </a>
 
   <script>
-    const contenedor = document.getElementById("carrito-contenido");
-    const total = document.getElementById("carrito-total");
-    const vaciarBtn = document.getElementById("vaciar-carrito");
-    const whatsappBtn = document.getElementById("enviar-whatsapp");
+    const listaCarrito = document.getElementById("lista-carrito");
+    const resumenCarrito = document.getElementById("resumen-carrito");
+    const carritoVacio = document.getElementById("carrito-vacio");
+    const subtotalEl = document.getElementById("subtotal");
+    const totalEl = document.getElementById("total");
+    const btnWhatsapp = document.getElementById("btn-whatsapp");
+    const whatsappFloat = document.getElementById("whatsapp-pedido");
 
-    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-
-    function renderCarrito() {
-      contenedor.innerHTML = "";
-      let suma = 0;
-      let mensaje = "";
-
+    function cargarCarrito() {
+      const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+      
+      listaCarrito.innerHTML = "";
+      
       if (carrito.length === 0) {
-        contenedor.innerHTML = "<p>No hay productos en el carrito.</p>";
-        total.textContent = "";
-        whatsappBtn.style.display = "none";
+        carritoVacio.style.display = "block";
+        resumenCarrito.style.display = "none";
+        whatsappFloat.style.display = "none";
         return;
       }
 
-      carrito.forEach((p, i) => {
-        suma += p.precio;
-        mensaje += `🛒 ${p.titulo} - Q${p.precio.toFixed(2)}\n`;
+      carritoVacio.style.display = "none";
+      resumenCarrito.style.display = "block";
+      whatsappFloat.style.display = "flex";
 
-        const div = document.createElement("div");
-        div.className = "producto";
-        div.innerHTML = `
-          <img src="${p.imagen}" alt="${p.titulo}" />
-          <h3>${p.titulo}</h3>
-          <p>${p.descripcion}</p>
-          <p>Q${p.precio.toFixed(2)}</p>
-          <button onclick="eliminar(${i})">Eliminar</button>
+      let subtotal = 0;
+
+      carrito.forEach((producto, index) => {
+        subtotal += producto.precio;
+
+        const item = document.createElement("div");
+        item.className = "item-carrito";
+        item.innerHTML = `
+          <img src="${producto.imagen || 'img/placeholder.png'}" alt="${producto.titulo}" />
+          <div class="info-item">
+            <h3>${producto.titulo}</h3>
+            <p class="descripcion">${producto.descripcion}</p>
+            <div class="precio-cantidad">
+              <span class="precio">Q${producto.precio.toFixed(2)}</span>
+              <button class="boton-eliminar" data-index="${index}">
+                <i class="bi bi-trash"></i>
+              </button>
+            </div>
+          </div>
         `;
-        contenedor.appendChild(div);
+        listaCarrito.appendChild(item);
       });
 
-      total.textContent = `Total: Q${suma.toFixed(2)}`;
-      const mensajeFinal = `Hola, quiero comprar los siguientes productos:\n\n${mensaje}\n🧾 Total: Q${suma.toFixed(2)}`;
-      const url = `https://wa.me/50241084481?text=${encodeURIComponent(mensajeFinal)}`;
+      const envio = 25.00;
+      const total = subtotal + envio;
 
-      whatsappBtn.href = url;
-      whatsappBtn.style.display = "inline-block";
+      subtotalEl.textContent = `Q${subtotal.toFixed(2)}`;
+      totalEl.textContent = `Q${total.toFixed(2)}`;
+
+      // Botón WhatsApp
+      const mensaje = encodeURIComponent(
+        `*¡Hola! Quiero hacer este pedido:*\n\n` +
+        carrito.map(p => `• *${p.titulo}* - Q${p.precio.toFixed(2)}`).join("\n") +
+        `\n\n*Subtotal:* Q${subtotal.toFixed(2)}\n*Envío:* Q${envio.toFixed(2)}\n*Total:* Q${total.toFixed(2)}`
+      );
+
+      btnWhatsapp.href = `https://wa.me/50241084481?text=${mensaje}`;
+      whatsappFloat.href = btnWhatsapp.href;
     }
 
-    function eliminar(index) {
-      carrito.splice(index, 1);
-      localStorage.setItem("carrito", JSON.stringify(carrito));
-      renderCarrito();
+    // Eliminar producto
+    listaCarrito.addEventListener("click", e => {
+      if (e.target.closest(".boton-eliminar")) {
+        const index = e.target.closest(".boton-eliminar").dataset.index;
+        let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+        carrito.splice(index, 1);
+        localStorage.setItem("carrito", JSON.stringify(carrito));
+        cargarCarrito();
+        // Actualizar contador en index.html
+        if (window.opener) {
+          window.opener.actualizarContadorCarrito?.();
+        }
+      }
+    });
+
+    // Cargar al inicio
+    cargarCarrito();
+
+    // Actualizar contador en index (si está abierto)
+    function actualizarContadorCarrito() {
+      const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+      const contador = document.querySelector("#contador-carrito") || 
+                      (window.opener?.document.querySelector("#contador-carrito"));
+      if (contador) contador.textContent = carrito.length;
     }
 
-    vaciarBtn.onclick = () => {
-      carrito = [];
-      localStorage.removeItem("carrito");
-      renderCarrito();
-    };
-
-    renderCarrito();
+    // Exponer función global
+    window.actualizarContadorCarrito = actualizarContadorCarrito;
   </script>
 </body>
 </html>
