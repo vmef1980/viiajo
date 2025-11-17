@@ -2,501 +2,181 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="theme-color" content="#F47C20" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
   <title>Carrito - GuateCocina</title>
-
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" />
-
-  <!-- Íconos -->
-  <link rel="icon" href="img/Viiajo_LogoConNombrePNGtoICO.ico" type="image/x-icon" />
-  <link rel="apple-touch-icon" href="img/Viiajo_LogoConNombrePNGtoICO.ico" />
-
   <style>
-    :root {
-      /* Paleta Puzzle Solutions */
-      --primary: #F47C20;
-      --primary-dark: #00A86F;
-      --accent: #0074B7;
-      --highlight: #FFD447;
-      --text-dark: #1C3F60;
-      --text-soft: #4CAF5C;
+    :root{--p:#F47C20;--pd:#00A86F;--a:#0074B7;--t:#1C3F60;--b:rgba(0,0,0,0.08);--s:0 8px 32px rgba(0,0,0,0.08)}
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Inter',sans-serif;background:linear-gradient(135deg,#fff8f0,#e6f7ff);color:var(--t);padding:2rem 1rem 7rem 1rem;min-height:100vh;position:relative}
+    .c{max-width:900px;margin:0 auto;background:white;border-radius:20px;overflow:hidden;box-shadow:var(--s)}
+    header{background:var(--p);color:white;padding:1.5rem;text-align:center}
+    header h1{margin:0;font-size:1.9rem}
+    .i{display:flex;align-items:center;gap:1rem;padding:1rem;border-bottom:1px solid var(--b);position:relative}
+    .i img{width:80px;height:80px;object-fit:contain;border-radius:12px}
+    .q{background:var(--p);color:white;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;position:absolute;top:8px;left:8px}
+    .info h3{margin:0 0 .4rem;font-size:1.1rem}
+    .pr{color:var(--p);font-weight:700}
+    .x{background:#e74c3c;color:white;border:none;width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:1.5rem;font-weight:bold;line-height:38px;text-align:center;flex-shrink:0}
+    .se{background:#f8f9fb;padding:1.5rem;border-radius:16px;margin:1.5rem 0}
+    .se h3{margin:0 0 1rem;color:var(--a);font-size:1.2rem}
+    select{width:100%;padding:.9rem;border-radius:12px;border:1.5px solid var(--b);font-size:1rem;margin:.5rem 0}
+    .op label{display:flex;align-items:center;gap:12px;cursor:pointer;font-size:1rem;padding:8px 0}
+    .op input[type=radio]{width:auto;margin:0}
+    .n{margin-top:.8rem;padding:.9rem;background:#e3f2fd;border-radius:12px;font-size:.92rem;color:#1565c0;border-left:4px solid #42a5f5;line-height:1.5}
+    .r{background:#f0f8ff;padding:1.5rem;border-radius:16px;font-size:1.1rem}
+    .l{display:flex;justify-content:space-between;margin:.8rem 0}
+    .tot{font-size:1.45rem;font-weight:700;color:var(--p);border-top:2px solid var(--p);padding-top:1rem;margin-top:1rem}
+    .btn{width:100%;padding:1.1rem;background:var(--p);color:white;border:none;border-radius:16px;font-size:1.25rem;font-weight:700;cursor:pointer;margin-top:1.5rem}
+    .btn:hover{background:var(--pd);transform:translateY(-3px);box-shadow:0 10px 30px rgba(0,168,111,.4)}
 
-      --bg: #f8f9fb;
-      --card-bg: rgba(255, 255, 255, 0.95);
-      --text: #2d2d2d;
-      --text-light: #666;
-      --border: rgba(0,0,0,0.08);
-      --shadow: 0 8px 32px rgba(0,0,0,0.08);
-      --radius: 16px;
-      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    /* BOTÓN FLOTANTE "SEGUIR COMPRANDO" */
+    .btn-flotante{
+      position:fixed;
+      bottom:20px;
+      right:20px;
+      background:var(--pd);
+      color:white;
+      width:58px;
+      height:58px;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:1.8rem;
+      box-shadow:0 6px 20px rgba(0,168,111,0.4);
+      z-index:1000;
+      transition:all .3s ease;
     }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    .btn-flotante:hover{
+      background:#008c5a;
+      transform:scale(1.1);
     }
-
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #fff8f0 0%, #e6f7ff 100%);
-      color: var(--text-dark);
-      line-height: 1.6;
-      min-height: 100vh;
-      padding: 1rem;
-    }
-
-    .wrapper {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 1rem;
-    }
-
-    header {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-
-    header h1 {
-      font-size: 2rem;
-      font-weight: 700;
-      background: linear-gradient(135deg, var(--accent), var(--primary));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    header p {
-      color: var(--text-light);
-      font-size: 0.95rem;
-      margin-top: 0.5rem;
-    }
-
-    #carrito-vacio {
-      text-align: center;
-      padding: 4rem 1rem;
-      color: var(--text-light);
-    }
-
-    #carrito-vacio i {
-      font-size: 4rem;
-      color: var(--text-soft);
-      margin-bottom: 1rem;
-    }
-
-    #carrito-vacio a {
-      display: inline-block;
-      margin-top: 1.5rem;
-      padding: 0.75rem 1.5rem;
-      background: var(--primary);
-      color: white;
-      text-decoration: none;
-      border-radius: 50px;
-      font-weight: 600;
-      box-shadow: 0 4px 12px rgba(244, 124, 32, 0.3);
-      transition: var(--transition);
-    }
-
-    #carrito-vacio a:hover {
-      background: var(--primary-dark);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(0, 168, 111, 0.4);
-    }
-
-    #lista-carrito {
-      display: grid;
-      gap: 1.5rem;
-      margin-bottom: 2rem;
-    }
-
-    .item-carrito {
-      display: flex;
-      background: var(--card-bg);
-      border-radius: var(--radius);
-      overflow: hidden;
-      box-shadow: var(--shadow);
-      border: 1px solid var(--border);
-      transition: var(--transition);
-    }
-
-    .item-carrito:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 32px rgba(0,0,0,0.1);
-    }
-
-    .item-carrito img {
-      width: 120px;
-      height: 120px;
-      object-fit: cover;
-    }
-
-    .info-item {
-      flex: 1;
-      padding: 1rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .info-item h3 {
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: var(--text-dark);
-      margin-bottom: 0.4rem;
-    }
-
-    .info-item .descripcion {
-      font-size: 0.85rem;
-      color: var(--text-light);
-      margin-bottom: 0.6rem;
-      display: -webkit-box;
-
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
-    .precio-cantidad {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .precio-cantidad .precio {
-      font-size: 1.3rem;
-      font-weight: 700;
-      color: var(--primary);
-    }
-
-    .boton-eliminar {
-      background: #ff4444;
-      color: white;
-      border: none;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: var(--transition);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .boton-eliminar:hover {
-      background: #cc0000;
-      transform: scale(1.1);
-    }
-
-    .resumen {
-      background: var(--card-bg);
-      padding: 1.5rem;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      border: 1px solid var(--border);
-      margin-bottom: 2rem;
-    }
-
-    .resumen h3 {
-      font-size: 1.3rem;
-      color: var(--text-dark);
-      margin-bottom: 1rem;
-      text-align: center;
-    }
-
-    .fila-resumen {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 0.75rem;
-      font-size: 1rem;
-    }
-
-    .total {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: var(--primary);
-      border-top: 2px solid var(--border);
-      padding-top: 0.75rem;
-      margin-top: 0.75rem;
-    }
-
-    .botones-accion {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      padding: 0.9rem 1.8rem;
-      border: none;
-      border-radius: 50px;
-      font-weight: 600;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: var(--transition);
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-
-    .btn-primario {
-      background: var(--primary);
-      color: white;
-    }
-
-    .btn-primario:hover {
-      background: var(--primary-dark);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(0, 168, 111, 0.4);
-    }
-
-    .btn-secundario {
-      background: white;
-      color: var(--text-dark);
-      border: 1.5px solid var(--border);
-    }
-
-    .btn-secundario:hover {
-      background: #f0f0f0;
-      border-color: var(--primary);
-      transform: translateY(-2px);
-    }
-
-    /* Botones flotantes */
-    #whatsapp-pedido, #boton-volver {
-      position: fixed;
-      z-index: 999;
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-      color: white;
-      text-decoration: none;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-      transition: var(--transition);
-    }
-
-    #whatsapp-pedido {
-      bottom: 90px;
-      right: 1rem;
-      background: var(--primary-dark);
-    }
-
-    #whatsapp-pedido:hover {
-      transform: scale(1.1);
-      background: #008c5a;
-    }
-
-    #boton-volver {
-      bottom: 160px;
-      right: 1rem;
-      background: var(--highlight);
-    }
-
-    #boton-volver:hover {
-      transform: scale(1.1);
-      background: #f5c02e;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.2); }
-      100% { transform: scale(1); }
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .item-carrito {
-        flex-direction: column;
-      }
-
-      .item-carrito img {
-        width: 100%;
-        height: 160px;
-      }
-
-      .info-item {
-        padding: 1rem;
-      }
-
-      .botones-accion {
-        flex-direction: column;
-      }
-
-      .btn {
-        width: 100%;
-      }
-    }
-
-    @media (max-width: 480px) {
-      header h1 {
-        font-size: 1.6rem;
-      }
-
-      #whatsapp-pedido, #boton-volver {
-        width: 56px;
-        height: 56px;
-        font-size: 1.4rem;
-      }
+    @media (min-width:768px){
+      .btn-flotante{ width:62px; height:62px; bottom:30px; right:30px; }
     }
   </style>
 </head>
 <body>
 
-  <div class="wrapper">
-    <header>
-      <h1>Tu Carrito</h1>
-      <p>Revisa y confirma tu pedido</p>
-    </header>
+<div class="c">
+  <header><h1>Tu Carrito</h1></header>
+  <div id="lista"></div>
 
-    <section id="carrito-vacio" class="carrito-vacio">
-      <i class="bi bi-cart-x"></i>
-      <h2>Tu carrito está vacío</h2>
-      <p>Explora nuestros deliciosos platillos y agrega lo que más te guste.</p>
-      <a href="index.html">Volver a la tienda</a>
-    </section>
+  <div id="lleno" style="display:none">
+    <div class="se">
+      <h3>Zona de Entrega</h3>
+      <select id="zona">
+        <option value="25">Ciudad de Guatemala - Q25</option>
+        <option value="35">Mixco, Fraijanes, Villa Nueva, etc. - Q35</option>
+        <option value="40" selected>Departamentos (todo el país) - Q40</option>
+      </select>
+      <div class="n"><strong>Nota:</strong> El costo de envío es base. Puede variar ±Q5-Q15. ¡Te lo confirmamos por WhatsApp!</div>
 
-    <section id="lista-carrito" class="lista-carrito"></section>
+      <h3 style="margin-top:1.5rem">Método de Pago</h3>
+      <div class="op"><label><input type="radio" name="pago" value="t" checked><span>Transferencia / Depósito Bancario</span></label></div>
+      <div class="op"><label><input type="radio" name="pago" value="c"><span>Contraentrega <span style="color:#e74c3c;font-weight:bold">(+5% solo en departamentos)</span></span></label></div>
+    </div>
 
-    <section id="resumen-carrito" class="resumen" style="display: none;">
-      <h3>Resumen del Pedido</h3>
-      <div class="fila-resumen">
-        <span>Subtotal</span>
-        <span id="subtotal">Q0.00</span>
-      </div>
-      <div class="fila-resumen">
-        <span>Envío</span>
-        <span id="envio">Q25.00</span>
-      </div>
-      <div class="fila-resumen total">
-        <span>Total</span>
-        <span id="total">Q25.00</span>
-      </div>
+    <div class="r">
+      <div class="l"><span>Subtotal:</span> <strong id="sub">Q0.00</strong></div>
+      <div class="l"><span>Envío:</span> <strong id="env">Q40.00</strong></div>
+      <div class="l" id="rec" style="display:none;color:#e74c3c"><span>Recargo contraentrega (5%):</span> <strong id="re">Q0.00</strong></div>
+      <div class="l tot"><span>Total a pagar:</span> <strong id="tot">Q40.00</strong></div>
+    </div>
 
-      <div class="botones-accion">
-        <a href="#" id="btn-whatsapp" class="btn btn-primario">
-          <i class="bi bi-whatsapp"></i> Enviar Pedido
-        </a>
-        <a href="index.html" class="btn btn-secundario">
-          <i class="bi bi-arrow-left"></i> Seguir Comprando
-        </a>
-      </div>
-    </section>
+    <button class="btn" onclick="fin()">Enviar pedido por WhatsApp</button>
   </div>
 
-  <!-- Botones flotantes -->
-  <a href="#" id="whatsapp-pedido" title="Enviar pedido por WhatsApp" style="display: none;">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/WhatsApp_icon.png" alt="WhatsApp" style="width: 32px; filter: brightness(0) invert(1);" />
-  </a>
+  <div id="vacio" style="text-align:center;padding:5rem 2rem">
+    <h2>Tu carrito está vacío</h2>
+    <p><a href="index.html" style="color:var(--a);font-weight:600">Volver a la tienda</a></p>
+  </div>
+</div>
 
-  <a href="index.html" id="boton-volver" title="Volver a la tienda">
-    <i class="bi bi-arrow-left-circle-fill"></i>
-  </a>
+<!-- BOTÓN FLOTANTE "SEGUIR COMPRANDO" -->
+<a href="index.html" class="btn-flotante" title="Seguir comprando">
+  <i class="bi bi-cart-plus"></i>
+</a>
 
-  <script>
-    const listaCarrito = document.getElementById("lista-carrito");
-    const resumenCarrito = document.getElementById("resumen-carrito");
-    const carritoVacio = document.getElementById("carrito-vacio");
-    const subtotalEl = document.getElementById("subtotal");
-    const totalEl = document.getElementById("total");
-    const btnWhatsapp = document.getElementById("btn-whatsapp");
-    const whatsappFloat = document.getElementById("whatsapp-pedido");
+<script>
+  const $ = s => document.getElementById(s);
+  const zona = $('zona');
 
-    function cargarCarrito() {
-      const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-      
-      listaCarrito.innerHTML = "";
-      
-      if (carrito.length === 0) {
-        carritoVacio.style.display = "block";
-        resumenCarrito.style.display = "none";
-        whatsappFloat.style.display = "none";
-        return;
-      }
-
-      carritoVacio.style.display = "none";
-      resumenCarrito.style.display = "block";
-      whatsappFloat.style.display = "flex";
-
-      let subtotal = 0;
-
-      carrito.forEach((producto, index) => {
-        subtotal += producto.precio;
-
-        const item = document.createElement("div");
-        item.className = "item-carrito";
-        item.innerHTML = `
-          <img src="${producto.imagen || 'img/placeholder.png'}" alt="${producto.titulo}" />
-          <div class="info-item">
-            <h3>${producto.titulo}</h3>
-            <p class="descripcion">${producto.descripcion}</p>
-            <div class="precio-cantidad">
-              <span class="precio">Q${producto.precio.toFixed(2)}</span>
-              <button class="boton-eliminar" data-index="${index}">
-                <i class="bi bi-trash"></i>
-              </button>
-            </div>
-          </div>
-        `;
-        listaCarrito.appendChild(item);
-      });
-
-      const envio = 25.00;
-      const total = subtotal + envio;
-
-      subtotalEl.textContent = `Q${subtotal.toFixed(2)}`;
-      totalEl.textContent = `Q${total.toFixed(2)}`;
-
-      // Botón WhatsApp
-      const mensaje = encodeURIComponent(
-        `*¡Hola! Quiero hacer este pedido:*\n\n` +
-        carrito.map(p => `• *${p.titulo}* - Q${p.precio.toFixed(2)}`).join("\n") +
-        `\n\n*Subtotal:* Q${subtotal.toFixed(2)}\n*Envío:* Q${envio.toFixed(2)}\n*Total:* Q${total.toFixed(2)}`
-      );
-
-      btnWhatsapp.href = `https://wa.me/50241084481?text=${mensaje}`;
-      whatsappFloat.href = btnWhatsapp.href;
-    }
-
-    // Eliminar producto
-    listaCarrito.addEventListener("click", e => {
-      if (e.target.closest(".boton-eliminar")) {
-        const index = e.target.closest(".boton-eliminar").dataset.index;
-        let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-        carrito.splice(index, 1);
-        localStorage.setItem("carrito", JSON.stringify(carrito));
-        cargarCarrito();
-        // Actualizar contador en index.html
-        if (window.opener) {
-          window.opener.actualizarContadorCarrito?.();
-        }
-      }
+  const agrupar = () => {
+    const map = {};
+    JSON.parse(localStorage.getItem("carrito")||"[]").forEach(p => {
+      map[p.id] ? (map[p.id].c += 1, map[p.id].t += p.precio) : (map[p.id] = {...p, c:1, t:p.precio});
     });
+    return Object.values(map);
+  };
 
-    // Cargar al inicio
-    cargarCarrito();
+  const act = () => {
+    const items = agrupar();
+    $('lista').innerHTML = "";
+    if (!items.length) { $('vacio').style.display="block"; return; }
+    $('vacio').style.display="none"; $('lleno').style.display="block";
 
-    // Actualizar contador en index (si está abierto)
-    function actualizarContadorCarrito() {
-      const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-      const contador = document.querySelector("#contador-carrito") || 
-                      (window.opener?.document.querySelector("#contador-carrito"));
-      if (contador) contador.textContent = carrito.length;
-    }
+    items.forEach(i => {
+      $('lista').innerHTML += `
+        <div class="i">
+          ${i.c>1 ? `<div class="q">${i.c}</div>` : ''}
+          <img src="${i.imagen||'img/placeholder.png'}" alt="${i.titulo}">
+          <div class="info flex-grow">
+            <h3>${i.titulo}</h3>
+            <p class="pr">Q${i.t.toFixed(2)} ${i.c>1?`(Q${i.precio} c/u)`:""}</p>
+          </div>
+          <button class="x" onclick="elim('${i.id}')">×</button>
+        </div>`;
+    });
+    $('sub').textContent = `Q${items.reduce((a,b)=>a+b.t,0).toFixed(2)}`;
+    calc();
+  };
 
-    // Exponer función global
-    window.actualizarContadorCarrito = actualizarContadorCarrito;
-  </script>
+  const calc = () => {
+    const items = agrupar();
+    const sub = items.reduce((a,b)=>a+b.t,0);
+    const env = +zona.value;
+    const contra = document.querySelector('input[value="c"]').checked;
+    const rec = contra && env===40 ? sub*0.05 : 0;
+
+    $('env').textContent = `Q${env.toFixed(2)}`;
+    $('rec').style.display = rec?"flex":"none";
+    $('re').textContent = `Q${rec.toFixed(2)}`;
+    $('tot').textContent = `Q${(sub+env+rec).toFixed(2)}`;
+  };
+
+  window.elim = id => {
+    let c = JSON.parse(localStorage.getItem("carrito")||"[]");
+    c = c.filter(p => p.id !== id);
+    localStorage.setItem("carrito", JSON.stringify(c));
+    act();
+  };
+
+  window.fin = () => {
+    const items = agrupar();
+    const sub = items.reduce((a,b)=>a+b.t,0);
+    const env = +zona.value;
+    const ztxt = zona.selectedOptions[0].text.split(" - ")[0];
+    const contra = document.querySelector('input[value="c"]').checked;
+    const rec = contra && env===40 ? sub*0.05 : 0;
+
+    let m = "*¡Hola GuateCocina!*%0AMi pedido:%0A%0A";
+    items.forEach(i=>m+=`• ${i.titulo} ×${i.c} - Q${i.t.toFixed(2)}%0A`);
+    m += `%0A*Subtotal:* Q${sub.toFixed(2)}`;
+    m += `%0A*Envío (${ztxt}):* Q${env.toFixed(2)}`;
+    if(rec) m += `%0A*Recargo contraentrega (5%):* Q${rec.toFixed(2)}`;
+    m += `%0A%0A*TOTAL: Q${(sub+env+rec).toFixed(2)}*%0A%0A`;
+    m += `*Pago:* ${contra?"Contraentrega":"Transferencia"}%0A¡Gracias!`;
+
+    open("https://wa.me/50241084481?text="+m,"_blank");
+  };
+
+  zona.onchange = calc;
+  document.querySelectorAll('input[name="pago"]').forEach(r=>r.onclick=calc);
+  act();
+</script>
 </body>
 </html>
