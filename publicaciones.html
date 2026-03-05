@@ -130,25 +130,37 @@
         logoParaImagen: "img/Viiajo_Nombre.png",
         csvDefault: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSHAY87rIFAPkwYS9bJvT80ydkUuxn1kTd6aS-Y7mM-1zoHNCqGewaL-NiYtyyFxjFLM4p5iSTA_bs4/pub?output=csv",
         colorDefault: "#007BC4",
-        hashtagsBase: "#Guatemala #VentasGT #TiendaOnline #EnviosGuate #VisaGT #Efectivo #Ofertas #Viiajo"
+        hashtagsBase: "#Guatemala #VentasGT #TiendaOnline #EnviosGuate #VisaGT #Efectivo #Ofertas #OrganizaGT"
     };
 
-    // Proxy más estable para imágenes y manipulación de Canvas
-    const PROXY = "https://images.weserv.nl/?url=";
-    const LOGO_URL = COMERCIAL_CONFIG.logoParaImagen; 
-    let productosGlobal = [];
-
+    // Aplicar configuración al cargar
     window.onload = () => {
         document.title = COMERCIAL_CONFIG.tituloPagina;
-        const fav = document.querySelector("link[rel='icon']");
-        if(fav) fav.href = COMERCIAL_CONFIG.favicon;
+        document.querySelector("link[rel='icon']").href = COMERCIAL_CONFIG.favicon;
         document.getElementById('js-brand-name').innerText = COMERCIAL_CONFIG.nombreHeader;
         document.getElementById('js-brand-tagline').innerText = COMERCIAL_CONFIG.tagline;
         document.getElementById('csvUrl').value = COMERCIAL_CONFIG.csvDefault;
         document.getElementById('accentColor').value = COMERCIAL_CONFIG.colorDefault;
     };
 
-    // ... (Funciones csvToArray y cargarCatalogo se mantienen igual) ...
+    /***********************************************************
+     * LÓGICA DE FUNCIONAMIENTO
+     ***********************************************************/
+    const PROXY = "https://corsproxy.io/?";
+    const LOGO_URL = COMERCIAL_CONFIG.logoParaImagen; 
+    let productosGlobal = [];
+
+    function csvToArray(strData) {
+        const objPattern = new RegExp(("(\\,|\\r?\\n|\\r|^)(?:\"([^\"]*(?:\"\"[^\"]*)*)\"|([^\\,\\r\\n]*))"), "gi");
+        let arrData = [[]], arrMatches = null;
+        while (arrMatches = objPattern.exec(strData)) {
+            let strMatchedDelimiter = arrMatches[1];
+            if (strMatchedDelimiter.length && (strMatchedDelimiter != ",")) arrData.push([]);
+            let strMatchedValue = arrMatches[2] ? arrMatches[2].replace(new RegExp("\"\"", "g"), "\"") : arrMatches[3];
+            arrData[arrData.length - 1].push(strMatchedValue);
+        }
+        return arrData;
+    }
 
     async function cargarCatalogo() {
         const url = document.getElementById('csvUrl').value;
@@ -182,12 +194,26 @@
                 select.appendChild(opt);
             });
             alert("✅ Catálogo sincronizado.");
-        } catch (e) { alert("❌ Error de carga de CSV."); }
+        } catch (e) { alert("❌ Error de carga."); }
     }
 
     function actualizarInterfaz() {
         renderizarPublicidad();
         generarCopyCompleto();
+    }
+
+    function generarCopyCompleto() {
+        const id = document.getElementById('productSelect').value;
+        const p = productosGlobal.find(x => x.id === id);
+        const userWeb = document.getElementById('userWeb').value || "Visita nuestra tienda";
+        const userWA = document.getElementById('userWA').value || "";
+        if(!p) return;
+
+        const waLink = userWA ? `https://wa.me/${userWA.replace(/\D/g,'')}` : "Contáctanos";
+        const tags = `#${p.cat.replace(/\s/g,'')} #${p.subCat.replace(/\s/g,'')} ${COMERCIAL_CONFIG.hashtagsBase}`.replace(/,/g, '');
+
+        document.getElementById('copyTextArea').value = 
+            `⭐ ¡${p.tituloGancho.toUpperCase()}! ⭐\n\n🔹 ${p.tituloDisplay.toUpperCase()}\n💰 Q${p.precio}\n\n📝 DESCRIPCIÓN:\n${p.desc}\n\n🚚 ENVÍOS A TODA GUATEMALA 🇬🇹\n💳 PAGOS: Efectivo, Transferencia y VISA.\n*(Aplican restricciones)\n\n🛒 COMPRA AQUÍ: ${userWeb}\n📲 WHATSAPP: ${waLink}\n\n${tags}`;
     }
 
     async function renderizarPublicidad() {
@@ -198,23 +224,20 @@
         const p = productosGlobal.find(x => x.id === id);
         if(!p) return;
 
-        area.innerHTML = "<p style='color:white;'>Generando vistas previas...</p>"; 
-        
+        area.innerHTML = ""; 
         let imagenes = [p.imgP];
         if(p.imgG) {
             const gal = p.imgG.split('|').map(u => u.trim()).filter(u => u !== "");
             imagenes = [...imagenes, ...gal];
         }
 
-        area.innerHTML = ""; 
-        for(let url of imagenes) {
+        for(let [index, url] of imagenes.entries()) {
             if(!url) continue;
             const card = document.createElement('div');
             card.className = "canvas-card";
             const canvas = document.createElement('canvas');
             card.appendChild(canvas);
             area.appendChild(card);
-            // Ejecutamos en secuencia para no saturar el navegador
             await dibujarArteOptimizado(canvas, url, p, platform, color);
         }
     }
@@ -232,93 +255,98 @@
         if(platform === 'ig_portrait') h = 1350;
 
         canvas.width = w; canvas.height = h;
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
+
         ctx.fillStyle = "#ffffff";
         ctx.fillRect(0,0,w,h);
 
         try {
-            // Carga de imagen con manejo de error
             const img = await cargarImg(imgUrl);
             const scale = Math.max(w / img.width, h / img.height);
             ctx.drawImage(img, (w/2)-(img.width*scale/2), (h/2)-(img.height*scale/2), img.width*scale, img.height*scale);
 
-            // Capa de degradado inferior
             const grad = ctx.createLinearGradient(0, h, 0, h*0.5);
-            grad.addColorStop(0, "rgba(0,0,0,0.85)");
+            grad.addColorStop(0, "rgba(0,0,0,0.8)");
             grad.addColorStop(1, "transparent");
             ctx.fillStyle = grad;
             ctx.fillRect(0, h*0.4, w, h*0.6);
 
-            // Texto Principal
             ctx.fillStyle = "white";
             ctx.textAlign = "left";
-            let textoAMostrar = p.tituloGancho.toUpperCase();
-            let fontSize = 65;
-            ctx.font = `bold ${fontSize}px Inter, Arial`;
-            while(ctx.measureText(textoAMostrar).width > (w - 100) && fontSize > 30) {
-                fontSize -= 2;
-                ctx.font = `bold ${fontSize}px Inter, Arial`;
-            }
-            ctx.fillText(textoAMostrar, 50, h - 170);
             
-            // Precio
+            let textoAMostrar = p.tituloGancho.toUpperCase();
+            let fontSize = 60;
+            ctx.font = `bold ${fontSize}px Arial`;
+            while(ctx.measureText(textoAMostrar).width > (w - 100) && fontSize > 25) {
+                fontSize -= 2;
+                ctx.font = `bold ${fontSize}px Arial`;
+            }
+            ctx.fillText(textoAMostrar, 50, h - 160);
+            
             ctx.fillStyle = color;
-            ctx.font = "bold 110px Inter, Arial";
+            ctx.font = "bold 100px Arial";
             ctx.fillText("Q" + p.precio, 50, h - 60);
 
-            // Información derecha
             ctx.textAlign = "right";
+            ctx.font = "30px Arial";
             let offsetInfo = 120;
 
             if(showWA && userWA) {
                 ctx.fillStyle = "#25D366";
-                ctx.font = "bold 32px Inter, Arial";
                 ctx.fillText("WhatsApp: " + userWA, w - 50, h - offsetInfo);
-                offsetInfo += 45;
+                offsetInfo += 40;
             }
 
             if(showWeb && userWeb) {
                 ctx.fillStyle = "white";
-                ctx.font = "32px Inter, Arial";
-                ctx.fillText(userWeb.toLowerCase(), w - 50, h - offsetInfo);
+                ctx.fillText(userWeb, w - 50, h - offsetInfo);
             }
 
-            ctx.fillStyle = "rgba(255,255,255,0.8)";
-            ctx.font = "italic 35px Inter, Arial";
+            ctx.fillStyle = "rgba(255,255,255,0.7)";
+            ctx.font = "35px Arial";
             ctx.fillText(p.subCat, w - 50, h - 65);
 
-            // Logo con manejo de error independiente
-            try {
-                const logo = await cargarImg(LOGO_URL);
-                const logoW = 180;
-                const logoH = logoW * (logo.height / logo.width);
-                ctx.drawImage(logo, 50, 50, logoW, logoH);
-            } catch(e) { console.warn("Logo no disponible"); }
-
-        } catch (e) {
-            ctx.fillStyle = "#333";
-            ctx.font = "30px Arial";
-            ctx.textAlign = "center";
-            ctx.fillText("Error al cargar imagen del producto", w/2, h/2);
-            console.error("Fallo en dibujo:", e);
-        }
+            const logo = await cargarImg(LOGO_URL).catch(() => null);
+            if(logo) ctx.drawImage(logo, 40, 40, 150, 150 * (logo.height / logo.width));
+        } catch (e) { console.error(e); }
     }
 
     function cargarImg(url) {
         return new Promise((res, rej) => {
             const img = new Image();
             img.crossOrigin = "anonymous";
-            // Limpiamos la URL de espacios y aplicamos el proxy de Weserv
-            const cleanUrl = url.trim().replace(/^https?:\/\//, '');
-            img.src = url.startsWith('http') ? PROXY + cleanUrl : url;
-            
+            img.src = url.startsWith('http') ? PROXY + encodeURIComponent(url) : url;
             img.onload = () => res(img);
-            img.onerror = () => rej(new Error("No se pudo cargar la imagen: " + url));
+            img.onerror = (err) => rej(err);
         });
     }
 
-    // ... (Mantener descargarTodo y copiarAlPortapapeles del código anterior) ...
+    function copiarAlPortapapeles() {
+        const area = document.getElementById('copyTextArea');
+        area.select();
+        document.execCommand("copy");
+        alert("📋 Texto copiado.");
+    }
+
+    function descargarTodo() {
+        const canvases = document.querySelectorAll('#previewArea canvas');
+        const pSelect = document.getElementById('productSelect');
+        if (pSelect.value === "" || canvases.length === 0) return alert("Selecciona un producto y sincroniza.");
+        
+        const productName = pSelect.options[pSelect.selectedIndex].text.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+
+        canvases.forEach((canvas, i) => {
+            const fileName = `${productName}_${i + 1}.png`;
+            const dataUrl = canvas.toDataURL("image/png");
+            const link = document.createElement('a');
+            link.href = dataUrl;
+            link.download = fileName;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+    }
 </script>
-
-
 </body>
 </html>
