@@ -146,7 +146,7 @@
     /***********************************************************
      * LÓGICA DE FUNCIONAMIENTO
      ***********************************************************/
-    const PROXY = "https://corsproxy.io/?";
+    const PROXY = "https://images.weserv.nl/?url=";
     const LOGO_URL = COMERCIAL_CONFIG.logoParaImagen; 
     let productosGlobal = [];
 
@@ -210,10 +210,20 @@
         if(!p) return;
 
         const waLink = userWA ? `https://wa.me/${userWA.replace(/\D/g,'')}` : "Contáctanos";
-        const tags = `#${p.cat.replace(/\s/g,'')} #${p.subCat.replace(/\s/g,'')} ${COMERCIAL_CONFIG.hashtagsBase}`.replace(/,/g, '');
+        
+        // --- NUEVA LÓGICA DE TÍTULO MARKETPLACE Y HASHTAGS ---
+        const tituloMP = `${p.tituloDisplay} | Nuevo | Envíos a toda Guatemala | Pago Contra Entrega`;
+        
+        // Hashtags dinámicos basados en el producto y tendencias
+        const tagProducto = p.tituloDisplay.replace(/\s/g,'');
+        const tagCategoria = p.cat.replace(/\s/g,'');
+        const tagSub = p.subCat.replace(/\s/g,'');
+        
+        const hashtagsRelacionados = `#${tagProducto} #${tagCategoria} #${tagSub} #Guatemala #Ventas #TiendaOnline #EnviosGuate #PagoContraEntrega #MarketplaceGT #RegalosGuatemala #VisaGT #Efectivo #Ofertas #Viiajo`;
 
         document.getElementById('copyTextArea').value = 
-            `⭐ ¡${p.tituloGancho.toUpperCase()}! ⭐\n\n🔹 ${p.tituloDisplay.toUpperCase()}\n💰 Q${p.precio}\n\n📝 DESCRIPCIÓN:\n${p.desc}\n\n🚚 ENVÍOS A TODA GUATEMALA 🇬🇹\n💳 PAGOS: Efectivo, Transferencia y VISA.\n*(Aplican restricciones)\n\n🛒 COMPRA AQUÍ: ${userWeb}\n📲 WHATSAPP: ${waLink}\n\n${tags}`;
+            `📌 TÍTULO MARKETPLACE:\n${tituloMP}\n\n` +
+            `⭐ ¡${p.tituloGancho.toUpperCase()}! ⭐\n\n🔹 ${p.tituloDisplay.toUpperCase()}\n💰 Q${p.precio}\n\n📝 DESCRIPCIÓN:\n${p.desc}\n\n🚚 ENVÍOS A TODA GUATEMALA 🇬🇹\n💳 PAGOS: Efectivo, Transferencia y VISA.\n*(Aplican restricciones)\n\n🛒 COMPRA AQUÍ: ${userWeb}\n📲 WHATSAPP: ${waLink}\n\n${hashtagsRelacionados}`;
     }
 
     async function renderizarPublicidad() {
@@ -312,16 +322,33 @@
         } catch (e) { console.error(e); }
     }
 
-    function cargarImg(url) {
-        return new Promise((res, rej) => {
-            const img = new Image();
-            img.crossOrigin = "anonymous";
-            img.src = url.startsWith('http') ? PROXY + encodeURIComponent(url) : url;
-            img.onload = () => res(img);
-            img.onerror = (err) => rej(err);
-        });
-    }
+function cargarImg(url) {
+    return new Promise((res, rej) => {
+        if (!url) {
+            rej("URL vacía");
+            return;
+        }
 
+        const img = new Image();
+        img.crossOrigin = "anonymous";
+
+        // Limpiamos la URL: quitamos espacios y el protocolo para el proxy weserv
+        let cleanUrl = url.trim().replace(/^https?:\/\//, '');
+        
+        img.src = PROXY + encodeURIComponent(cleanUrl);
+
+        img.onload = () => res(img);
+        img.onerror = (err) => {
+            console.error("Error cargando imagen desde proxy:", img.src);
+            // Intento final sin proxy por si la imagen permite CORS nativo
+            const imgRetry = new Image();
+            imgRetry.crossOrigin = "anonymous";
+            imgRetry.src = url;
+            imgRetry.onload = () => res(imgRetry);
+            imgRetry.onerror = () => rej(err);
+        };
+    });
+}
     function copiarAlPortapapeles() {
         const area = document.getElementById('copyTextArea');
         area.select();
